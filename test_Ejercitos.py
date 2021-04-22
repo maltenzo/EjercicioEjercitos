@@ -93,3 +93,29 @@ class TestsBasicos(unittest.TestCase):
         self.nacionBizantina.batallarMiEjercitoContraElDe(0, 1, self.nacionBizantina)
         self.assertEqual(1, self.nacionBizantina.cantidadDeUnidadesEliminadasDelJesimoEjercito(0))
         self.assertEqual(1, self.nacionBizantina.cantidadDeUnidadesEliminadasDelJesimoEjercito(1))
+
+    def test_al_tener_una_batalla_los_ejercitos_y_empatan_actualizan_sus_historiales_de_forma_correcta(self):
+        self.nacionBizantina.crearEjercito()
+        self.nacionBizantina.batallarMiEjercitoContraElDe(0, 1, self.nacionBizantina)
+
+        self.assertEqual("Empate", self.nacionBizantina.miJesimoEjercito(0).historial[-1].resultadoDeLaBatalla)
+        self.assertEqual("Empate", self.nacionBizantina.miJesimoEjercito(1).historial[-1].resultadoDeLaBatalla)
+
+        self.assertEqual(self.nacionBizantina, self.nacionBizantina.miJesimoEjercito(0).historial[-1].nacionEnemiga)
+        self.assertEqual(self.nacionBizantina, self.nacionBizantina.miJesimoEjercito(1).historial[-1].nacionEnemiga)
+
+        self.assertEqual(1, self.nacionBizantina.miJesimoEjercito(0).historial[-1].numeroDeEjercitoEnemigo)
+        self.assertEqual(0, self.nacionBizantina.miJesimoEjercito(1).historial[-1].numeroDeEjercitoEnemigo)
+
+    def test_al_tener_una_batalla_los_ejercitos_actualizan_sus_historiales_de_forma_correcta(self):
+        self.nacionChina.crearEjercito()
+        self.nacionBizantina.batallarMiEjercitoContraElDe(0, 1, self.nacionChina)
+
+        self.assertEqual("Gane", self.nacionBizantina.miJesimoEjercito(0).historial[-1].resultadoDeLaBatalla)
+        self.assertEqual("Perdi", self.nacionChina.miJesimoEjercito(1).historial[-1].resultadoDeLaBatalla)
+
+        self.assertEqual(self.nacionChina, self.nacionBizantina.miJesimoEjercito(0).historial[-1].nacionEnemiga)
+        self.assertEqual(self.nacionBizantina, self.nacionChina.miJesimoEjercito(1).historial[-1].nacionEnemiga)
+
+        self.assertEqual(1, self.nacionBizantina.miJesimoEjercito(0).historial[-1].numeroDeEjercitoEnemigo)
+        self.assertEqual(0, self.nacionChina.miJesimoEjercito(1).historial[-1].numeroDeEjercitoEnemigo)    

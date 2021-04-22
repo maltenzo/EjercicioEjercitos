@@ -19,8 +19,17 @@ class Nacion():
 
     #batalla mi ejercito con otro (podria ser de la misma nacion)    
     def batallarMiEjercitoContraElDe(self, miNumeroDeEjercito, numeroDeEjercitoEnemigo, nacionEnemiga):
+        self.declararBatallaA(numeroDeEjercitoEnemigo, nacionEnemiga, miNumeroDeEjercito)
+        self.registrarBatalla(nacionEnemiga, numeroDeEjercitoEnemigo, miNumeroDeEjercito)
         self.ejercitos[miNumeroDeEjercito].batallarContra(nacionEnemiga.ejercitos[numeroDeEjercitoEnemigo])
     
+
+    def declararBatallaA(self, numeroDeEjercitoEnemigo, nacionEnemiga, miNumeroDeEjercito):
+        nacionEnemiga.registrarBatalla(self, miNumeroDeEjercito, numeroDeEjercitoEnemigo)
+
+    def registrarBatalla(self, nacionEnemiga, numeroDeEjercitoEnemigo, miNumeroDeEjercito):
+        self.miJesimoEjercito(miNumeroDeEjercito).registrarBatallaEnHistorial(numeroDeEjercitoEnemigo, nacionEnemiga)
+
     #entrena una unidad en un ejercito especifico, cada unidad se encarga de saber como entrenar
     def entrenarIesimaUnidadDelJesimoEjercito(self, indiceDeUnidad, indiceDeEjercito):
         self.miJesimoEjercito(indiceDeEjercito).entrenarIesimaUnidad(indiceDeUnidad)

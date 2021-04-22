@@ -1,4 +1,5 @@
 from random import randint
+from EntradaHistorial import EntradaHistorial
 from Unidades import Piquero
 from Unidades import Arquero
 from Unidades import Caballero
@@ -13,6 +14,7 @@ class Ejercito():
     def __init__(self):
         self.oro = 1000
         self.unidades = self.crearUnidades() 
+        self.historial = []
 
     #crea las unidades basicas del ejercito, cada ejercito de las naciones sabe como responder este mensaje
     def crearUnidades(self):
@@ -27,15 +29,16 @@ class Ejercito():
 
     #batalla este ejercito contra el especificado por parametro
     def batallarContra(self, otroEjercito):
-        if self.fuerzaDelEjercito() > otroEjercito.fuerzaDelEjercito():
-            self.gane()
-            otroEjercito.perdi()
-        elif self.fuerzaDelEjercito() > otroEjercito.fuerzaDelEjercito():
-            self.perdi()
-            otroEjercito.gane()
-        else:
-            self.empate()
-            otroEjercito.empate()            
+        if otroEjercito != self:
+            if self.fuerzaDelEjercito() > otroEjercito.fuerzaDelEjercito():
+                self.gane()
+                otroEjercito.perdi()
+            elif self.fuerzaDelEjercito() > otroEjercito.fuerzaDelEjercito():
+                self.perdi()
+                otroEjercito.gane()
+            else:
+                self.empate()
+                otroEjercito.empate()            
         
     #crea N unidades del tipo de unidad especificada por parametros
     def crearNUnidadesDe(self, tipoDeUnidad, cantidadDeUnidades):
@@ -43,6 +46,13 @@ class Ejercito():
         listaDeUnidades = [unidad() for i in range(0, cantidadDeUnidades)]
         return listaDeUnidades
     
+    def registrarBatallaEnHistorial(self, numeroDeEjercitoEnemigo, nacionEnemiga):
+        nuevaEntrada = EntradaHistorial(numeroDeEjercitoEnemigo, nacionEnemiga)
+        self.historial.append(nuevaEntrada)
+
+    def actualizarHistorialDeBatalla(self, resultadoDeLaBatalla):
+        self.historial[-1].actualizarSiGane(resultadoDeLaBatalla)
+
     #entrena a la iesima unidad del arreglo de unidades, cada unidad sabe como responder el mensaje entrenar
     def entrenarIesimaUnidad(self, indice):
         self.entrenarUnidad(self.unidades[indice])
@@ -91,14 +101,17 @@ class Ejercito():
     #avisa el ejercito que ganó 
     def gane(self):
         self.oro += 100
+        self.actualizarHistorialDeBatalla("Gane")
 
     #avisa el ejercito que perdio 
     def perdi(self):
         self.eliminarDosUnidadesDeMayorPuntaje()
+        self.actualizarHistorialDeBatalla("Perdi")
 
     #avisa el ejercito que empato 
     def empate(self):
-        self.eliminarUnidadRandom()  
+        self.eliminarUnidadRandom()
+        self.actualizarHistorialDeBatalla("Empate")  
 
     #elimina una unidad al azar (podria pasar que trate de eliminar uno que ya esta eliminado, me parece una mecanica interesante  para jugar con la suerte asi que lo dejo asi)
     def eliminarUnidadRandom(self):
