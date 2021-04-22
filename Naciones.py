@@ -20,13 +20,14 @@ class Nacion():
     #batalla mi ejercito con otro (podria ser de la misma nacion)    
     def batallarMiEjercitoContraElDe(self, miNumeroDeEjercito, numeroDeEjercitoEnemigo, nacionEnemiga):
         self.declararBatallaA(numeroDeEjercitoEnemigo, nacionEnemiga, miNumeroDeEjercito)
-        self.registrarBatalla(nacionEnemiga, numeroDeEjercitoEnemigo, miNumeroDeEjercito)
         self.ejercitos[miNumeroDeEjercito].batallarContra(nacionEnemiga.ejercitos[numeroDeEjercitoEnemigo])
     
-
+    # notifica a las naciones que van a luchar para que le avisen a sus ejercitos que lo guarden la batalla en el historial
     def declararBatallaA(self, numeroDeEjercitoEnemigo, nacionEnemiga, miNumeroDeEjercito):
+        self.registrarBatalla(nacionEnemiga, numeroDeEjercitoEnemigo, miNumeroDeEjercito)
         nacionEnemiga.registrarBatalla(self, miNumeroDeEjercito, numeroDeEjercitoEnemigo)
-
+    
+    #avisa al ejercito de la batalla inminente para que lo registren en el historial
     def registrarBatalla(self, nacionEnemiga, numeroDeEjercitoEnemigo, miNumeroDeEjercito):
         self.miJesimoEjercito(miNumeroDeEjercito).registrarBatallaEnHistorial(numeroDeEjercitoEnemigo, nacionEnemiga)
 

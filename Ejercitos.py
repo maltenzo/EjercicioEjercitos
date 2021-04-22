@@ -30,6 +30,7 @@ class Ejercito():
     #batalla este ejercito contra el especificado por parametro
     def batallarContra(self, otroEjercito):
         if otroEjercito != self:
+
             if self.fuerzaDelEjercito() > otroEjercito.fuerzaDelEjercito():
                 self.gane()
                 otroEjercito.perdi()
@@ -46,10 +47,12 @@ class Ejercito():
         listaDeUnidades = [unidad() for i in range(0, cantidadDeUnidades)]
         return listaDeUnidades
     
+    #guarda la inminente batalla en le historial
     def registrarBatallaEnHistorial(self, numeroDeEjercitoEnemigo, nacionEnemiga):
         nuevaEntrada = EntradaHistorial(numeroDeEjercitoEnemigo, nacionEnemiga)
         self.historial.append(nuevaEntrada)
 
+    #actualiza la ultima entrada del historial con el resultado de la batalla una vez finalizada la misma
     def actualizarHistorialDeBatalla(self, resultadoDeLaBatalla):
         self.historial[-1].actualizarSiGane(resultadoDeLaBatalla)
 
