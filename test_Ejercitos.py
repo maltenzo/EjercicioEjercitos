@@ -1,6 +1,12 @@
 import unittest
-import Ejercitos as Ej
+import Naciones as Ejercicio
+from Unidades import Piquero
+from Unidades import Arquero
+from Unidades import Caballero
 
+#-------------------------------------------Comentarios------------------------------------------#
+# Para testear unidades voy a usar, en general, al ejercito ingles porque tiene una distribucion simple de las tropas:
+# 0 - 9 piqueros, 10 - 19 arqueros, 20 - 29 caballeros
 
 COSTE_ENTRENAMIENTO_PIQUERO = 10
 COSTE_ENTRENAMIENTO_ARQUERO = 20
@@ -20,15 +26,15 @@ ORO_POR_VICTORIA = 100
 class TestsBasicos(unittest.TestCase):
     def setUp(self):
         #--------------Naciones--------------------#
-        self.nacionChina = Ej.NacionChina()
-        self.nacionInglesa = Ej.NacionInglesa()
-        self.nacionBizantina = Ej.NacionBizantina()
+        self.nacionChina = Ejercicio.NacionChina()
+        self.nacionInglesa = Ejercicio.NacionInglesa()
+        self.nacionBizantina = Ejercicio.NacionBizantina()
 
         #------------Unidades De Referencia--------#    
-        self.piqueroDeReferencia = Ej.Piquero()
-        self.arqueroDeReferencia = Ej.Arquero()
-        self.caballeroDeReferencia = Ej.Caballero()
-
+        self.piqueroDeReferencia = Piquero()
+        self.arqueroDeReferencia = Arquero()
+        self.caballeroDeReferencia = Caballero()
+        
     def test_todas_las_Naciones_inician_con_1000_de_oro_en_sus_ejercitos(self):
         self.assertEqual(ORO_IMICIAL, self.nacionChina.verOroDeMiJesimoEjercito(0))
         self.assertEqual(ORO_IMICIAL, self.nacionInglesa.verOroDeMiJesimoEjercito(0))
